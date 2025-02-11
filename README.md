@@ -29,7 +29,7 @@ text_to_image_retrieval/
 │── render.yaml           # Required for Render Deployment
 │── architecture.png      # System Architecture Diagram
 │── README.md             # Project Documentation
-
+---
 ## 🛠️ Installation & Setup
 
 ### **1 Clone the Repository**
@@ -50,7 +50,7 @@ pip install -r requirements.txt
 python app.py
 
 The app will be available at: http://127.0.0.1:5000/
-
+---
 ### Assumptions & Challanges
 #### Assumptions:
 All images are stored in JPEG (.jpg) format.
@@ -65,3 +65,4 @@ Fixed by ensuring only filenames are returned from the backend.
 2. Performance Optimization:
 
 Lazy loading of embeddings improved the speed of retrieval.
+---
