@@ -16,21 +16,21 @@ It allows users to **input a text query** (e.g., "a sunset over mountains") and 
 ---
 ## Project Structure
 text_to_image_retrieval/
-app.py                # Flask Backend
-models.py             # Model Logic (CLIP + BLIP)
-static/
+**1. app.py                # Flask Backend
+**2. models.py             # Model Logic (CLIP + BLIP)
+**3. static/
     images/           # Image Storage
     default.jpg       # Fallback Image
-templates/
+**4. templates/
     index.html        # Bootstrap Frontend
-generated_captions.json  # Pre-generated Image Captions
-requirements.txt      # Dependencies
-README.md             # Project Documentation
+**5. generated_captions.json  # Pre-generated Image Captions
+**6. requirements.txt      # Dependencies
+**7. README.md             # Project Documentation
 ---
 ## 🛠️ Installation & Setup
 
 ### **1 Clone the Repository**
-```bash
+
 git clone https://github.com/lumadimukovhe/text_to_image_retrieval.git
 cd text_to_image_retrieval
 
@@ -63,4 +63,4 @@ Fixed by ensuring only filenames are returned from the backend.
 
 Lazy loading of embeddings improved the speed of retrieval.
 ---
-```
+
