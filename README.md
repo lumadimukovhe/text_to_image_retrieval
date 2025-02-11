@@ -15,58 +15,58 @@ It allows users to **input a text query** (e.g., "a sunset over mountains") and 
 
 ---
 ## Project Structure
-text_to_image_retrieval/
-**1.  Flask Backend
+#### text_to_image_retrieval/
+##### 1.  Flask Backend
 app.py               
-**2. Model Logic (CLIP + BLIP)
+##### 2. Model Logic (CLIP + BLIP)
 models.py             
-**3. Image Storage
+##### 3. Image Storage
 static/
     images/           
     default.jpg      
-**4. Bootstrap Frontend
+##### 4. Bootstrap Frontend
 templates/
     index.html        
-**5. Pre-generated Image Captions
+##### 5. Pre-generated Image Captions
 generated_captions.json  
-**6. Dependencies
+##### 6. Dependencies
 requirements.txt      
-**7. README.md           
+##### 7. README.md           
 ---
 ## 🛠️ Installation & Setup
 
-### **1 Clone the Repository**
+##### 1. Clone the Repository
 
-git clone https://github.com/lumadimukovhe/text_to_image_retrieval.git
-cd text_to_image_retrieval
+- git clone https://github.com/lumadimukovhe/text_to_image_retrieval.git
+- cd text_to_image_retrieval
 
-### **2 Create Virtual Environment**
-python -m venv venv
+##### 2. Create Virtual Environment
+- python -m venv venv
 
-### **3 Activate the Virtual Environment**
-source venv\Scripts\activate
+##### 3. Activate the Virtual Environment
+- source venv\Scripts\activate
 
-### **4 Istall dependencies**
-pip install -r requirements.txt
+##### 4. Istall dependencies
+- pip install -r requirements.txt
 
-### **5 Run Flask APP**
-python app.py
+##### 5. Run Flask APP
+- python app.py
 
-The app will be available at: http://127.0.0.1:5000/
+- The app will be available at: http://127.0.0.1:5000/
 ---
 ### Assumptions & Challanges
 #### Assumptions:
-All images are stored in JPEG (.jpg) format.
-The dataset contains high-quality images.
-CLIP embeddings accurately represent image features.
-Challenges Faced:
+- All images are stored in JPEG (.jpg) format.
+- The dataset contains high-quality images.
+- CLIP embeddings accurately represent image features.
+#### Challenges Faced:
 1️. Image Path Issues:
 
-Initially, odd-indexed images failed to load due to incorrect path formatting (static/static/images/).
-Fixed by ensuring only filenames are returned from the backend.
+- Initially, odd-indexed images failed to load due to incorrect path formatting (static/static/images/).
+- Fixed by ensuring only filenames are returned from the backend.
 
 2. Performance Optimization:
 
-Lazy loading of embeddings improved the speed of retrieval.
+- Lazy loading of embeddings improved the speed of retrieval.
 ---
 
