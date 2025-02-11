@@ -1,7 +1,8 @@
-flask
-torch
-torchvision
-pillow
-transformers
-clip-by-openai
-numpy
+flask==2.2.5
+torch==2.1.0
+torchvision==0.16.0
+pillow==10.0.1
+transformers==4.37.2
+clip-by-openai==1.0
+numpy==1.26.3
+
