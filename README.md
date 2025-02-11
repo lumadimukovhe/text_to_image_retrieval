@@ -11,7 +11,7 @@ It allows users to **input a text query** (e.g., "a sunset over mountains") and 
 ✅ **CLIP & BLIP Models:** Uses CLIP for text-image matching and BLIP for image captioning.  
 ✅ **Bootstrap UI:** Modern and responsive frontend.  
 ✅ **Flask API:** Lightweight backend server.  
-✅ **Deployable on Render & Heroku.**  
+
 
 ---
 ## Project Structure
