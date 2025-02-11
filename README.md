@@ -16,19 +16,16 @@ It allows users to **input a text query** (e.g., "a sunset over mountains") and 
 ---
 ## Project Structure
 text_to_image_retrieval/
-│── app.py                # Flask Backend
-│── models.py             # Model Logic (CLIP + BLIP)
-│── static/
-│   ├── images/           # Image Storage
-│   ├── default.jpg       # Fallback Image
-│── templates/
-│   ├── index.html        # Bootstrap Frontend
-│── generated_captions.json  # Pre-generated Image Captions
-│── requirements.txt      # Dependencies
-│── Procfile              # Required for Heroku Deployment
-│── render.yaml           # Required for Render Deployment
-│── architecture.png      # System Architecture Diagram
-│── README.md             # Project Documentation
+app.py                # Flask Backend
+models.py             # Model Logic (CLIP + BLIP)
+static/
+    images/           # Image Storage
+    default.jpg       # Fallback Image
+templates/
+    index.html        # Bootstrap Frontend
+generated_captions.json  # Pre-generated Image Captions
+requirements.txt      # Dependencies
+README.md             # Project Documentation
 ---
 ## 🛠️ Installation & Setup
 
