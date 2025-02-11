@@ -63,3 +63,4 @@ Fixed by ensuring only filenames are returned from the backend.
 
 Lazy loading of embeddings improved the speed of retrieval.
 ---
+```
