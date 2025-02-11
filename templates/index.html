@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text-to-Image Retrieval</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        #results { display: flex; flex-wrap: wrap; justify-content: center; }
+        img { width: 200px; height: 200px; margin: 10px; object-fit: cover; border: 2px solid #ddd; }
+        input, button { padding: 10px; font-size: 16px; margin: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Text-to-Image Retrieval</h1>
+    <input type="text" id="query" placeholder="Enter text description">
+    <input type="number" id="top_k" value="5" min="1">
+    <button onclick="searchImages()">Search</button>
+
+    <h2>Results:</h2>
+    <div id="results"></div>
+
+    <script>
+        function searchImages() {
+            let query = $("#query").val();
+            let top_k = $("#top_k").val();
+
+            $("#results").html("<p>Loading...</p>");
+
+            $.ajax({
+                url: "/search",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ query: query, top_k: top_k }),
+                success: function(response) {
+                    $("#results").html("");
+                    response.images.forEach(img => {
+                        $("#results").append(`<img src="/static/${img}" alt="Retrieved Image">`);
+                    });
+                },
+                error: function() {
+                    $("#results").html("<p>Error retrieving images.</p>");
+                }
+            });
+        }
+    </script>
+</body>
+</html>
