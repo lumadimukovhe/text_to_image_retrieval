@@ -16,16 +16,22 @@ It allows users to **input a text query** (e.g., "a sunset over mountains") and 
 ---
 ## Project Structure
 text_to_image_retrieval/
-**1. app.py                # Flask Backend
-**2. models.py             # Model Logic (CLIP + BLIP)
-**3. static/
-    images/           # Image Storage
-    default.jpg       # Fallback Image
-**4. templates/
-    index.html        # Bootstrap Frontend
-**5. generated_captions.json  # Pre-generated Image Captions
-**6. requirements.txt      # Dependencies
-**7. README.md             # Project Documentation
+**1.  Flask Backend
+app.py               
+**2. Model Logic (CLIP + BLIP)
+models.py             
+**3. Image Storage
+static/
+    images/           
+    default.jpg      
+**4. Bootstrap Frontend
+templates/
+    index.html        
+**5. Pre-generated Image Captions
+generated_captions.json  
+**6. Dependencies
+requirements.txt      
+**7. README.md           
 ---
 ## 🛠️ Installation & Setup
 
