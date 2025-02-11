@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, jsonify
 from models import retrieve_images
+import os
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="static")
 
 @app.route("/")
 def index():
@@ -17,9 +18,13 @@ def search():
         return jsonify({"error": "Please enter a search query."})
 
     results = retrieve_images(query, top_k)
-    image_paths = [img[0].replace("./static/", "") for img in results]  # Format paths for frontend
 
-    return jsonify({"images": image_paths})
+    # Only return filenames, not full paths
+    image_filenames = [os.path.basename(img) for img in results]
+
+    print("\nFlask Debugging - Returning Filenames:", image_filenames)  # Debugging
+
+    return jsonify({"images": image_filenames})
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, use_reloader=False)

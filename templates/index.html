@@ -2,31 +2,73 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Text-to-Image Retrieval</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
-        #results { display: flex; flex-wrap: wrap; justify-content: center; }
-        img { width: 200px; height: 200px; margin: 10px; object-fit: cover; border: 2px solid #ddd; }
-        input, button { padding: 10px; font-size: 16px; margin: 10px; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 800px;
+            margin-top: 50px;
+        }
+        .results-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .result-image {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+            transition: transform 0.3s ease-in-out;
+        }
+        .result-image:hover {
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body>
-    <h1>Text-to-Image Retrieval</h1>
-    <input type="text" id="query" placeholder="Enter text description">
-    <input type="number" id="top_k" value="5" min="1">
-    <button onclick="searchImages()">Search</button>
 
-    <h2>Results:</h2>
-    <div id="results"></div>
+    <div class="container text-center">
+        <h1 class="mb-4">Text-to-Image Retrieval</h1>
+
+        <div class="input-group mb-3">
+            <input type="text" id="query" class="form-control" placeholder="Enter text description">
+            <input type="number" id="top_k" class="form-control" value="5" min="1" max="20">
+            <button class="btn btn-primary" onclick="searchImages()">Search</button>
+        </div>
+
+        <div id="loading" class="text-center text-primary" style="display: none;">
+            <div class="spinner-border" role="status"></div>
+            <p>Loading results...</p>
+        </div>
+
+        <div id="results" class="results-container"></div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         function searchImages() {
             let query = $("#query").val();
             let top_k = $("#top_k").val();
 
-            $("#results").html("<p>Loading...</p>");
+            $("#results").html("");
+            $("#loading").show();  // Show loading spinner
 
             $.ajax({
                 url: "/search",
@@ -34,16 +76,29 @@
                 contentType: "application/json",
                 data: JSON.stringify({ query: query, top_k: top_k }),
                 success: function(response) {
-                    $("#results").html("");
-                    response.images.forEach(img => {
-                        $("#results").append(`<img src="/static/${img}" alt="Retrieved Image">`);
+                    $("#loading").hide();
+                    if (response.images.length === 0) {
+                        $("#results").html("<p class='text-danger'>No results found.</p>");
+                        return;
+                    }
+
+                    response.images.forEach((img, index) => {
+                        let imgPath = `/static/images/${img}`;
+
+                        console.log(`✅ Image ${index + 1}: ${imgPath}`);
+
+                        let imgElement = `<img src="${imgPath}" class="result-image"
+                                          alt="Retrieved Image" onerror="this.onerror=null; this.src='/static/images/default.jpg';">`;
+                        $("#results").append(imgElement);
                     });
                 },
                 error: function() {
-                    $("#results").html("<p>Error retrieving images.</p>");
+                    $("#loading").hide();
+                    $("#results").html("<p class='text-danger'>Error retrieving images.</p>");
                 }
             });
         }
     </script>
+
 </body>
 </html>
