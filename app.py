@@ -22,8 +22,6 @@ def search():
     # Only return filenames, not full paths
     image_filenames = [os.path.basename(img) for img in results]
 
-    print("\nFlask Debugging - Returning Filenames:", image_filenames)  # Debugging
-
     return jsonify({"images": image_filenames})
 
 if __name__ == "__main__":

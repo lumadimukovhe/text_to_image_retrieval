@@ -1,9 +1,11 @@
-python -m pip install --upgrade pip
-flask
-torch
-torchvision
-pillow
-transformers
-clip-by-openai
-numpy
+Flask==3.1.0
+gunicorn==23.0.0
+huggingface-hub==0.28.1
+numpy==2.2.2
+openai==1.61.1
+openai-clip==1.0.1
+pillow==11.1.0
+torch==2.6.0
+torchvision==0.21.0
+transformers==4.48.3
 
