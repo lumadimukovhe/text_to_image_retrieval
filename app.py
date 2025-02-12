@@ -20,7 +20,7 @@ def search():
     results = retrieve_images(query, top_k)
 
     # Only return filenames, not full paths
-    image_filenames = [os.path.basename(img) for img in results]
+    image_filenames = [os.path.basename(img[0]) for img in results]  # Extract only the filename
 
     return jsonify({"images": image_filenames})
 

@@ -8,7 +8,14 @@ from transformers import BlipProcessor, BlipForConditionalGeneration
 
 # Load models
 device = "cuda" if torch.cuda.is_available() else "cpu"
-clip_model, preprocess = clip.load("ViT-B/32", device=device)
+clip_model = None  # Load on demand
+preprocess = None  # Load on demand
+
+def load_clip():
+    global clip_model, preprocess
+    if clip_model is None:
+        clip_model, preprocess = clip.load("ViT-B/32", device=device)
+
 processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
 blip_model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base").to(device)
 
@@ -41,25 +48,26 @@ with open(captions_file, "w") as f:
 # Compute image embeddings (CLIP only)
 image_embeddings = {}
 
-def get_image_embedding(img_name):
-    """Computes CLIP image embedding only (without caption embedding)"""
-    img_path = os.path.join(image_folder, img_name)
-
-    # Get CLIP image embedding
+def get_image_embedding(img_path):
+    """Loads CLIP only when an image is being processed."""
+    load_clip()  # Load CLIP if it's not already loaded
     image = preprocess(Image.open(img_path)).unsqueeze(0).to(device)
     with torch.no_grad():
-        image_embedding = clip_model.encode_image(image).cpu().numpy()
+        return clip_model.encode_image(image).cpu().numpy()
 
-    # Store embedding
-    image_embeddings[img_name] = image_embedding
-    return image_embedding
 
 def retrieve_images(query, top_k=5):
-    """Retrieve top K images based on text query using CLIP"""
+    load_clip()
     text_embedding = clip_model.encode_text(clip.tokenize([query]).to(device)).detach().cpu().numpy()
 
-    scores = {img: np.dot(text_embedding, get_image_embedding(img).T) for img in image_files}
-    sorted_images = sorted(scores.items(), key=lambda x: x[1], reverse=True)[:top_k]
+    # Process images one by one instead of preloading all into memory
+    scores = {}
+    for img in os.listdir("static/images/"):
+        img_path = os.path.join("static/images/", img)
+        image_embedding = get_image_embedding(img_path)  # Load only when needed
+        scores[img] = np.dot(text_embedding, image_embedding.T)
+
+    return sorted(scores.items(), key=lambda x: x[1], reverse=True)[:top_k]
 
     # Return filenames only
     filenames = [img[0] for img in sorted_images]
